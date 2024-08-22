@@ -52,7 +52,7 @@ Before you begin, ensure you have the following installed:
    spring.datasource.username=your_db_username
    spring.datasource.password=your_db_password
 
-Replace your_db_username and your_db_password with your actual PostgreSQL credentials.
+Replace your_db_username and your_db_password with your actual PostgreSQL credentials.  
 2. **Flyway Configuration:**
    Flyway is used for managing database migrations. Migration scripts are located in the src/main/resources/db/migration folder. The Flyway configuration is already set in the application.properties file:
    ```bash
