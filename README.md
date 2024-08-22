@@ -59,11 +59,12 @@ Replace your_db_username and your_db_password with your actual PostgreSQL creden
     spring.flyway.enabled=true
     spring.flyway.locations=classpath:db/migration
     spring.flyway.baseline-on-migrate=true
-   
+   ```
 3. **External API Configuration:**
    Configure the external API for currency exchange rates in the CurrencyExchangeService class. The API URL is set in the service:
     ```bash
     private static final String API_URL = "http://api.exchangeratesapi.io/v1/latest?access_key=your_access_key";
+    ```
 Replace **'your_access_key'** with your actual API access key.
 
 ## Database Migration
