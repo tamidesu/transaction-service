@@ -2,6 +2,8 @@
 
 This is a Java-based microservice for managing financial transactions, integrating with external APIs for currency exchange rates, and managing spending limits. The service is built using Spring Boot, JPA, PostgreSQL, and Flyway for database migrations.
 
+
+
 ## Table of Contents
 - [Features](#features)
 - [Prerequisites](#prerequisites)
@@ -15,6 +17,8 @@ This is a Java-based microservice for managing financial transactions, integrati
 - [Contributing](#contributing)
 - [License](#license)
 
+
+
 ## Features
 - Record transactions with various currencies.
 - Automatically fetch and store exchange rates from an external API.
@@ -22,6 +26,8 @@ This is a Java-based microservice for managing financial transactions, integrati
 - Query transactions that exceed spending limits.
 - Set new monthly spending limits.
 - Use Flyway for database migrations.
+
+
 
 ## Prerequisites
 
@@ -31,6 +37,8 @@ Before you begin, ensure you have the following installed:
 - [Gradle](https://gradle.org/)
 - [PostgreSQL](https://www.postgresql.org/) (version 13 or above)
 - [Docker](https://www.docker.com/) (optional, for containerized deployment)
+
+
 
 ## Installation
 
@@ -44,15 +52,21 @@ Before you begin, ensure you have the following installed:
    If you are using Gradle:
    ```bash
    ./gradlew build
+
+   
 ## Configuration
 1. **Database Configuration:**
    The service uses PostgreSQL as its database. You can configure the database connection in the src/main/resources/application.properties file:
+
+
     ```bash
    spring.datasource.url=jdbc:postgresql://localhost:5432/transaction_service_db
    spring.datasource.username=your_db_username
    spring.datasource.password=your_db_password
 
 Replace your_db_username and your_db_password with your actual PostgreSQL credentials.      
+
+
 2. **Flyway Configuration:**
    Flyway is used for managing database migrations. Migration scripts are located in the src/main/resources/db/migration folder. The Flyway configuration is already set in the application.properties file:
    ```bash
@@ -60,6 +74,8 @@ Replace your_db_username and your_db_password with your actual PostgreSQL creden
     spring.flyway.locations=classpath:db/migration
     spring.flyway.baseline-on-migrate=true
    ```
+
+   
 3. **External API Configuration:**
    Configure the external API for currency exchange rates in the CurrencyExchangeService class. The API URL is set in the service:
     ```bash
@@ -67,15 +83,21 @@ Replace your_db_username and your_db_password with your actual PostgreSQL creden
     ```
 Replace **'your_access_key'** with your actual API access key.
 
+
+
 ## Database Migration
 
 Flyway will automatically apply the database migration scripts on application startup. Make sure your PostgreSQL database is running and the connection details are correctly set in the **'application.properties'** file.
+
+
 
 ## Running the Service with Gradle
 
 ```bash
 ./gradlew bootRun
 ```
+
+
 
 ## API Endpoints
 * **Create Transaction:**  
@@ -103,6 +125,8 @@ Example Request Body:
 * **Get Transactions Exceeding Limit:**  
 `'GET /api/transactions/exceeding-limit'`
 
+
+
 ## Testing
 
 Unit tests are provided using JUnit 5, Mockito. You can run tests with the following command:
@@ -110,6 +134,8 @@ Unit tests are provided using JUnit 5, Mockito. You can run tests with the follo
 ```bash
 ./gradlew test
 ```
+
+
 ## Docker Support
 
 You can containerize the application using Docker.
@@ -131,6 +157,8 @@ docker build -t transaction-service .
 docker run -p 8080:8080 transaction-service
 ```
 The service will be accessible at 'http://localhost:8080'.
+
+
 ### Contributing
 Contributions are welcome! Please fork the repository and submit a pull request.
 
