@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: transaction-db
+    environment:
+      POSTGRES_DB: your_database_name
+      POSTGRES_USER: your_surname
+      POSTGRES_PASSWORD: your_password
+    ports:
+      - "5432:5432"
+    networks:
+      - transaction-network
+
+  transaction-service:
+    build: .
+    image: transaction-service:latest
+    container_name: transaction-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/your_database_name
+      SPRING_DATASOURCE_USERNAME: your_surname
+      SPRING_DATASOURCE_PASSWORD: your_password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - transaction-network
+
+networks:
+  transaction-network:
+    driver: bridge

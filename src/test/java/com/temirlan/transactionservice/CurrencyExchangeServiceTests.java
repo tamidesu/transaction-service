@@ -26,6 +26,7 @@ public class CurrencyExchangeServiceTests {
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
     }
 
@@ -39,7 +40,10 @@ public class CurrencyExchangeServiceTests {
                 .rate(rate)
                 .build();
 
-        when(exchangeRateRepository.findByCurrency(currency)).thenReturn(Optional.of(exchangeRateEntity));
+        when(exchangeRateRepository.findByCurrencyAndTimestampAfter(any(), any()))
+                .thenReturn(Optional.empty());
+        when(exchangeRateRepository.findTopByCurrencyOrderByTimestampDesc(currency))
+                .thenReturn(Optional.of(exchangeRateEntity));
 
         // Act
         BigDecimal result = currencyExchangeService.getExchangeRate(currency);
@@ -53,7 +57,10 @@ public class CurrencyExchangeServiceTests {
         // Arrange
         String currency = "USD";
 
-        when(exchangeRateRepository.findByCurrency(currency)).thenReturn(Optional.empty());
+        when(exchangeRateRepository.findByCurrencyAndTimestampAfter(any(), any()))
+                .thenReturn(Optional.empty());
+        when(exchangeRateRepository.findTopByCurrencyOrderByTimestampDesc(currency))
+                .thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> currencyExchangeService.getExchangeRate(currency));

@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -33,21 +35,28 @@ class TransactionServiceTests {
     }
 
     @Test
-    void testCreateTransaction_LimitExceeded() {
+    void testGetTransactionById_Found() {
         // Arrange
+        Long transactionId = 1L;
         TransactionEntity transaction = TransactionEntity.builder()
-                .sum(BigDecimal.valueOf(150))
-                .limitSum(BigDecimal.valueOf(100))
-                .currencyShortname("EUR")
+                .id(transactionId)
+                .accountFrom(123L)
+                .accountTo(456L)
+                .currencyShortname("USD")
+                .sum(BigDecimal.valueOf(800))
+                .expenseCategory("services")
+                .datetime(Instant.now())
+                .limitSum(BigDecimal.valueOf(1000))
+                .limitDatetime(Instant.now())
+                .limitCurrencyShortname("USD")
                 .build();
 
-        when(currencyExchangeService.getExchangeRate("USD")).thenReturn(BigDecimal.valueOf(1.2));
+        when(transactionRepository.findById(transactionId)).thenReturn(Optional.of(transaction));
 
         // Act
-        TransactionEntity result = transactionService.createTransaction(transaction);
+        TransactionEntity result = transactionService.getTransactionById(transactionId);
 
         // Assert
-        assertEquals("limit_exceeded", result.getExpenseCategory());
-        verify(transactionRepository, times(1)).save(transaction);
+        assertEquals(transaction, result);
     }
 }

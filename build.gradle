@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.2'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.flywaydb.flyway' version '10.17.0'
 }
 
 group = 'com.temirlan'
@@ -24,7 +25,8 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.flywaydb:flyway-core'
+	implementation "org.flywaydb:flyway-database-postgresql"
+	implementation 'org.flywaydb:flyway-core:10.17.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -39,4 +41,12 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+flyway {
+	url = 'jdbc:postgresql://postgres:5432/transaction_service_db'
+	user = 'postgres'
+	password = 'Space_500862'
+	schemas = ['public']
+	locations = ['classpath:db/migration']
 }
