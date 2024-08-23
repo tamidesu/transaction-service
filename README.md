@@ -15,7 +15,6 @@ This is a Java-based microservice for managing financial transactions, integrati
 - [Testing](#testing)
 - [Docker Support](#docker-support)
 - [Contributing](#contributing)
-- [License](#license)
 
 
 
@@ -138,25 +137,29 @@ Unit tests are provided using JUnit 5, Mockito. You can run tests with the follo
 
 ## Docker Support
 
-You can containerize the application using Docker.
-1. **Create a Dockerfile:**  
-Example Dockerfile:  
-```dockerfile
-FROM openjdk:17-jdk-slim
-VOLUME /tmp
-ARG JAR_FILE=build/libs/transaction-service-1.0.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-```
-2. **Build the Docker image:**  
-```bash
-docker build -t transaction-service .
-```
-3. **Run the Docker container:**
-```bash
-docker run -p 8080:8080 transaction-service
-```
-The service will be accessible at 'http://localhost:8080'.
+You can containerize the application using Docker and Docker Compose. This makes it easy to deploy the service along with its dependencies.  
+### Building and Running with Docker
+1. **Ensure Docker and Docker Compose** are installed on your system.
+2. **Build the Docker image** using the Dockerfile provided in the project:
+   ```bash
+   docker build -t transaction-service .
+   ```
+3. **Run the Docker container** using Docker Compose:
+
+
+   Navigate to the directory containing the **'docker-compose.yml'** file and run:
+   ```bash
+   docker-compose up
+   ```
+This will start both the PostgreSQL database container and the transaction service container, setting up the necessary network and dependencies.
+
+4. **Accessing the Service:**  Once the containers are up, the transaction service will be available at **'http://localhost:8080'**.
+5. **Stopping the Service:**  To stop the running containers, use:
+   ```bash
+   docker-compose down
+   ```
+
+
 
 
 ### Contributing
@@ -164,5 +167,5 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 
 ### Summary
 - This `README.md` file provides a comprehensive guide on how to set up, configure, and run your Transaction Service.
-- It includes instructions for building the project, configuring the database and external API, running the application, and using Docker for containerization.
+- It includes instructions for building the project, configuring the database and external API, running the application, and using Docker.
 - Ensure to adjust paths, names, and configurations according to your actual setup and project needs.
